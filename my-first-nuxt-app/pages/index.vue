@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <nuxt-link to="users">Users</nuxt-link>
+      <nuxt-link to="products">Products</nuxt-link>
     </div>
   </div>
 </template>
