@@ -1,6 +1,7 @@
 <template>
   <div>
-    <Header />
+      <Header />
+      <header>USERS SECTION</header>
     <nuxt />
   </div>
 </template>
@@ -13,5 +14,4 @@ export default {
     Header
   }
 }
-
 </script>

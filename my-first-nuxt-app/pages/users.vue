@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Header />
         <nuxt-child />
         <input type="text" v-model="userId">
         <button @click="onLoadUser">Load User</button>
@@ -17,6 +18,7 @@ export default {
         onLoadUser() {
             this.$router.push('/users/' + this.userId)
         }
-    }
+    },
+    layout: 'users'
 }
 </script>
