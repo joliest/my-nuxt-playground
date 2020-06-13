@@ -1,0 +1,17 @@
+{
+  "name": "nuxt-first-project",
+  "version": "1.0.0",
+  "description": "My remarkable Nuxt.js project",
+  "author": "Joliver Estampador",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {}
+}
