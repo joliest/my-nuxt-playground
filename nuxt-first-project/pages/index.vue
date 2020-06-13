@@ -4,8 +4,9 @@
       <h1>Get the latest tech news!</h1>
     </section>
     <section class="featured-posts">
-      <nuxt-link :to="`/posts/${1}`">
-        <article class="post-preview">
+      <nuxt-link :to="`/posts/${1}`"
+                  class="post-preview">
+        <article>
           <div class="post-thumbnail"
                style="background-image: url('https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg')"></div>
           <div class="post-content">
@@ -14,8 +15,9 @@
           </div>
         </article>
       </nuxt-link>
-      <nuxt-link :to="`/posts/${2}`">
-        <article class="post-preview">
+      <nuxt-link :to="`/posts/${2}`"
+                  class="post-preview">
+        <article>
           <div class="post-thumbnail"
                style="background-image: url('https://hypertechx.com/wp-content/uploads/2017/10/gettyimages-186450097.jpg')"></div>
           <div class="post-content">
@@ -34,8 +36,7 @@
 
 <style scoped>
 .intro {
-  max-height: 300px;
-  margin-bottom: 50px;
+  height: 300px;
   position: relative;
   padding: 30px;
   box-sizing: border-box;
@@ -77,18 +78,17 @@
   border: 1px solid #ccc;
   box-shadow: 0 2px 2px #ccc;
   background-color: white;
-  margin-right: 10px;
+  width: 90%;
 }
 
 a {
-  width: 50%;
   text-decoration: none;
   color: black;
 }
 
 @media (min-width: 850px) {
   .post-preview {
-    /* width: 400px; */
+    width: 400px;
     margin: 10px;
   }
 }
