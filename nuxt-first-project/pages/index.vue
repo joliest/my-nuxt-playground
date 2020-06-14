@@ -3,26 +3,16 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <section class="featured-posts">
-      <PostPreview 
-        id="1"
-        thumbnails="https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg"
-        title="Hello there"
-        previewText="This is my first post" />
-      <PostPreview 
-        id="2"
-        thumbnails="https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg"
-        title="Hello there - second time"
-        previewText="This is my second post" />
-    </section>
+    <PostList />
   </div>
 </template>
 
 <script>
-import PostPreview from '@/components/Posts/PostPreview'
+import PostList from '@/components/Posts/PostList'
+
 export default {
   components: {
-    PostPreview
+    PostList
   }
 }
 </script>
