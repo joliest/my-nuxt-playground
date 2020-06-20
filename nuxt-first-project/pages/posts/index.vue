@@ -11,7 +11,7 @@ export default {
   components: {
     PostList
   },
-  asyncData(context) {
+  fetch(context) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         resolve({
@@ -32,15 +32,18 @@ export default {
         })
       }, 1000)
     }).then(data => {
-      // once you resolve, pass the data
-      return data;
+      // you can access the state via context
+      context.store.commit('setPosts', data.loadedPosts)
     }).catch(e => {
       // if you call reject()
     });
   },
-  created() {
-    // 4. access store
-    this.$store.dispatch('setPosts', this.loadedPosts)
+  computed: {
+    // loaded posts will be no longer accessed by interpolation
+    // use thcomputed to get the data
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
+    }
   }
 }
 </script>
