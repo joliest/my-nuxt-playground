@@ -11,7 +11,8 @@ const createStore = () => {
             }
         },
         actions: {
-            nuxtServerInit(vuexContext, context) {          
+            nuxtServerInit(vuexContext, context) {     
+                
                 return new Promise((resolve, reject) => {
                     setTimeout(() => {
                         vuexContext.commit('setPosts', [
