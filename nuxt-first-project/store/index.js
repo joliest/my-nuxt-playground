@@ -22,7 +22,7 @@ const createStore = () => {
         },
         actions: {
             nuxtServerInit(vuexContext, context) {     
-                return axios.get('https://nuxt-blog-f8057.firebaseio.com/posts.json')
+                return axios.get(`${process.env.baseUrl}/posts.json`)
                     .then(res => {
                         const postArray = [];
                         for (const key in res.data) {
@@ -41,7 +41,7 @@ const createStore = () => {
                     updatedDate: new Date()
                 }
                 // not requried to return, useful for redirection
-                return axios.post('https://nuxt-blog-f8057.firebaseio.com/posts.json', createdPost)
+                return axios.post(`${process.env.baseUrl}/posts.json`, createdPost)
                 .then(res => {
                     // updating vuex store to make it sync
                     commit('addPost', { ...createdPost, id: res.data.name })
@@ -49,7 +49,7 @@ const createStore = () => {
                 .catch(e => console.log(e))
             },
             editPost({commit}, editedPost) {
-                return axios.put(`https://nuxt-blog-f8057.firebaseio.com/posts/${editedPost.id}.json`, editedPost)
+                return axios.put(`${process.env.baseUrl}/posts/${editedPost.id}.json`, editedPost)
                     .then(res => {
                         // updating vuex store to make it sync
                         commit('editPost', editedPost)
