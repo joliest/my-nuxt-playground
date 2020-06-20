@@ -19,22 +19,18 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-  asyncData(context, callback) {
-    setTimeout(() => { 
-      callback(null, {
-        loadedPost: 
-          {
-            id: '2',
-            title: `Second posts (ID: ${context.route.params.id})`, // this.$route.params
-            author: 'Joli',
-            updatedData: new Date(),
-            content: 'some dummy text baby bear',
-            previewText: 'This is our second post',
-            thumbnail: 'https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg'
-          }
+  asyncData(context) {
+    return axios.get(`https://nuxt-blog-f8057.firebaseio.com/posts/${context.params.id}.json`)
+      .then(res => {
+        // these will be merged to data property
+        return {
+          loadedPost: res.data
+        }
       })
-    },1000)
+      .catch(e => context.error(e))
   }
 }
 </script>
