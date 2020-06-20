@@ -20,15 +20,17 @@ export default {
     asyncData(context) {
         return axios.get(`https://nuxt-blog-f8057.firebaseio.com/posts/${context.params.postId}.json`)
             .then(res => {
-                return { loadedPost: res.data }
+                // manually add the id
+                return { loadedPost: { ...res.data, id: context.params.postId  } }
             })
             .catch(e => context.error(e))
     },
     methods: {
         onSubmitted(editedPosts) {
-            axios.put(`https://nuxt-blog-f8057.firebaseio.com/posts/${this.$route.params.postId}.json`, editedPosts)
-                .then(res => console.log(res))
-                .catch(e => console.log(e))
+            this.$store.dispatch('editPost', editedPosts).then(() => {
+                this.$router.push('/admin');
+            });
+
         }
     }
 }
