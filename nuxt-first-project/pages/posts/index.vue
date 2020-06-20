@@ -35,9 +35,12 @@ export default {
       // once you resolve, pass the data
       return data;
     }).catch(e => {
-
+      // if you call reject()
     });
-
+  },
+  created() {
+    // 4. access store
+    this.$store.dispatch('setPosts', this.loadedPosts)
   }
 }
 </script>
