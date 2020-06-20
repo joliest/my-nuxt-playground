@@ -23,7 +23,7 @@ import axios from 'axios';
 
 export default {
   asyncData(context) {
-    return axios.get(`https://nuxt-blog-f8057.firebaseio.com/posts/${context.params.id}.json`)
+    return axios.get(`${process.env.baseUrl}/posts/${context.params.id}.json`)
       .then(res => {
         // these will be merged to data property
         return {
