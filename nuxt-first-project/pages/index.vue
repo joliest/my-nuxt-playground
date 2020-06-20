@@ -3,7 +3,7 @@
     <section class="intro">
       <h1>Get the latest tech news!</h1>
     </section>
-    <PostList :posts="loadedPost" />
+    <PostList :posts="loadedPosts" />
   </div>
 </template>
 
@@ -14,30 +14,10 @@ export default {
   components: {
     PostList
   },
-  data() {
-    return {
-      loadedPost: []
+  computed: {
+    loadedPosts() {
+      return this.$store.getters.loadedPosts
     }
-  },
-  asyncData(context, callback) {
-    setTimeout(() => {
-      callback(null, {
-          loadedPost: [
-          {
-            id: '1',
-            title: 'First Post',
-            previewText: 'This is our first post',
-            thumbnail: 'https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg'
-          },
-          {
-            id: '2',
-            title: 'Second Post',
-            previewText: 'This is our second post',
-            thumbnail: 'https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg'
-          }
-        ]
-      }) 
-    }, 1000)
   }
 }
 </script>

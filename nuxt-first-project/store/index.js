@@ -14,6 +14,37 @@ const createStore = () => {
             }
         },
         actions: {
+            
+            // 0] Add nuxtServerInit()
+            nuxtServerInit(vuexContext, context) {
+
+                // 1.] async action should return a Promise            
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+
+                        // 2] access commit via vuexContent, send the payload
+                        vuexContext.commit('setPosts', [
+                          {
+                            id: '1',
+                            title: 'First Post',
+                            previewText: 'This is our first post',
+                            thumbnail: 'https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg'
+                          },
+                          {
+                            id: '2',
+                            title: 'Second Post',
+                            previewText: 'This is our second post',
+                            thumbnail: 'https://thyblackman.com/wp-content/uploads/2018/11/TECH.jpg'
+                          }
+                        ])
+
+                        // 3] call the resolve to mark you're done
+                        resolve()
+                    }, 1000)
+                }).then(data => {
+                    context.store.commit('setPosts', data.loadedPosts)
+                }).catch(e => {});
+            },
             setPosts({commit}, posts) {
                 commit('setPosts', posts)
             }
