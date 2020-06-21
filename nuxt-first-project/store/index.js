@@ -94,16 +94,8 @@ const createStore = () => {
                             'expirationDate', 
                             new Date().getTime() + result.expiresIn * 1000 
                         )
-
-                        // sets timeout
-                        dispatch('setLogoutTime', result.expiresIn * 1000)
                     })
                     .catch(e => console.log(e))
-            },
-            setLogoutTime({commit}, duration) {
-                setTimeout(() => {
-                    commit('clearToken')
-                }, duration)
             },
             // fetch the token when page refreshes
             initAuth({commit, dispatch}, req) {
@@ -130,14 +122,14 @@ const createStore = () => {
                 } else {
                     token = localStorage.getItem('token');
                     expirationDate = localStorage.getItem('tokenExpiration');
-    
-                    // expired or token available?
-                    if (new Date().getTime() > expirationDate || !token) {
-                        return;
-                    }
                 }
-
-                dispatch('setLogoutTime', expirationDate - new Date().getTime())
+                
+                // expired or token available?
+                if (new Date().getTime() > expirationDate || !token) {
+                    console.log('No token / invalid token')
+                    commit('clearToken')
+                    return;
+                }
                 commit('setToken', token);
             }
         },
