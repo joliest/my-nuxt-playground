@@ -21,6 +21,9 @@ const createStore = () => {
             },
             setToken(state, token) {
                 state.token = token
+            },
+            clearToken(state) {
+                state.token = null
             }
         },
         actions: {
@@ -60,7 +63,7 @@ const createStore = () => {
                     })
                     .catch(e => console.log(e))
             },
-            authenticateUser({commit}, authData) {
+            authenticateUser({commit, dispatch}, authData) {
                 let authUrl = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.fbAPIKey}`
       
                 if (!authData.isLogin) {
@@ -76,8 +79,15 @@ const createStore = () => {
                     })
                     .then(result => {
                         commit('setToken', result.idToken)
+                        // sets timeout
+                        dispatch('setLogoutTime', result.expiresIn * 1000)
                     })
                     .catch(e => console.log(e))
+            },
+            setLogoutTime(commit, duration) {
+                setTimeout(() => {
+                    commit('clearToken')
+                }, duration)
             }
         },
         getters: {
