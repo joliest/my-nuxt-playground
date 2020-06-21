@@ -45,15 +45,15 @@ const createStore = () => {
                     updatedDate: new Date()
                 }
                 // not requried to return, useful for redirection
-                return this.$axios.$post('/posts.json', createdPost)
+                return this.$axios.$post(`/posts.json?auth=${state.token}`, createdPost)
                 .then(data => {
                     // updating vuex store to make it sync
                     commit('addPost', { ...createdPost, id: data.name })
                 })
                 .catch(e => console.log(e))
             },
-            editPost({commit}, editedPost) {
-                return this.$axios.$put(`/posts/${editedPost.id}.json`, editedPost)
+            editPost({commit, state}, editedPost) {
+                return this.$axios.$put(`/posts/${editedPost.id}.json?auth=${state.token}`, editedPost)
                     .then(res => {
                         // updating vuex store to make it sync
                         commit('editPost', editedPost)
