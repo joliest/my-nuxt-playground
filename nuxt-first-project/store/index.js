@@ -1,4 +1,5 @@
 import Vuex from 'vuex';
+import Cookie from 'js-cookie';
 
 const createStore = () => {
     return new Vuex.Store({
@@ -80,9 +81,19 @@ const createStore = () => {
                     .then(result => {
                         commit('setToken', result.idToken)
 
-                        //store in local storage
+                        //store in local storage can be accessible in browser/client only
                         localStorage.setItem('token', result.idToken)
-                        localStorage.setItem('tokenExpiration', new Date().getTime() + result.expiresIn * 1000 )
+                        localStorage.setItem(
+                            'tokenExpiration', 
+                            new Date().getTime() + result.expiresIn * 1000 
+                        )
+
+                        // store as cookie to be able to read by nuxt server
+                        Cookie.set('jwt', result.idToken)
+                        Cookie.set(
+                            'expirationDate', 
+                            new Date().getTime() + result.expiresIn * 1000 
+                        )
 
                         // sets timeout
                         dispatch('setLogoutTime', result.expiresIn * 1000)
@@ -95,13 +106,35 @@ const createStore = () => {
                 }, duration)
             },
             // fetch the token when page refreshes
-            initAuth({commit, dispatch}) {
-                const token = localStorage.getItem('token');
-                const expirationDate = localStorage.getItem('tokenExpiration');
+            initAuth({commit, dispatch}, req) {
+                let token, expirationDate;
+                if (req) {
+                    if (!req.headers.cookie) {
+                        return;
+                    }
+                    const jwtCookie = req.headers.cookie
+                        .split(';')
+                        .find(c => c.trim().startsWith('jwt='));
 
-                // expired or token available?
-                if (new Date().getTime() > expirationDate || !token) {
-                    return;
+                    if (!jwtCookie) {
+                        return;
+                    }
+
+                    // retrieving the token from the cookie
+                    token = jwtCookie.split('=')[1];
+
+                    expirationDate = req.headers.cookie
+                        .split(';')
+                        .find(c => c.trim().startsWith('expirationDate='))
+                        .split('=')[1];
+                } else {
+                    token = localStorage.getItem('token');
+                    expirationDate = localStorage.getItem('tokenExpiration');
+    
+                    // expired or token available?
+                    if (new Date().getTime() > expirationDate || !token) {
+                        return;
+                    }
                 }
 
                 dispatch('setLogoutTime', expirationDate - new Date().getTime())
