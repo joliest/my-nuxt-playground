@@ -10,7 +10,6 @@
 
 <script>
 import AdminPostForm from '@/components/Admin/AdminPostForm'
-import axios from 'axios'
 
 export default {
     layout: 'admin',
@@ -18,10 +17,11 @@ export default {
         AdminPostForm,
     },
     asyncData(context) {
-        return axios.get(`${process.env.baseUrl}/posts/${context.params.postId}.json`)
-            .then(res => {
+        return context.app.$axios
+            .$get(`/posts/${context.params.postId}.json`)
+            .then(data => {
                 // manually add the id
-                return { loadedPost: { ...res.data, id: context.params.postId  } }
+                return { loadedPost: { ...data, id: context.params.postId  } }
             })
             .catch(e => context.error(e))
     },
