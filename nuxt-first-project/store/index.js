@@ -39,7 +39,7 @@ const createStore = () => {
             setPosts({commit}, posts) {
                 commit('setPosts', posts)
             },
-            addPost({commit}, post) {
+            addPost({commit, state}, post) {
                 const createdPost = {
                     ...post,
                     updatedDate: new Date()
