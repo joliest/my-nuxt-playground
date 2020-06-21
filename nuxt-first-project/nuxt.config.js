@@ -1,4 +1,6 @@
 
+const bodyParser = require('express')
+
 export default {
   mode: 'universal',
   /*
@@ -69,5 +71,9 @@ export default {
   },
   router: {
     middleware: 'log'
-  }
+  },
+  serverMiddleware: [
+    bodyParser.json(),
+    '~/api'
+  ]
 }
