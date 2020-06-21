@@ -85,14 +85,14 @@ const createStore = () => {
                         localStorage.setItem('token', result.idToken)
                         localStorage.setItem(
                             'tokenExpiration', 
-                            new Date().getTime() + result.expiresIn * 1000 
+                            new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
                         )
 
                         // store as cookie to be able to read by nuxt server
                         Cookie.set('jwt', result.idToken)
                         Cookie.set(
                             'expirationDate', 
-                            new Date().getTime() + result.expiresIn * 1000 
+                            new Date().getTime() + Number.parseInt(result.expiresIn) * 1000
                         )
                     })
                     .catch(e => console.log(e))
